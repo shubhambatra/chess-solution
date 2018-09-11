@@ -7,8 +7,8 @@ const main = async function() {
         output: process.stdout
       });
     
-    let str = await input(read);
-    console.log('str ', str);
+    let {inputObj, permuteArr } = await input(read);
+    
 }
 main();
 

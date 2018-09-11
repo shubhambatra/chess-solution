@@ -1,3 +1,11 @@
+const getAlias = require('./utils/getAlias');
+
+/**
+ * 
+ * @param {function} read 
+ * @param {String} quest 
+ * @return Promise
+ */
 async function question(read, quest) {
     return new Promise((resolve, reject) => {
         read.question(quest, async (answer) => {
@@ -10,39 +18,51 @@ async function question(read, quest) {
         });
     })
 }
+/**
+ * 
+ * @param {function} read 
+ */
 const input = async function(read) {
-    let inputObj = {};
     
     console.log('dimensions of the board: Width X Height ')
     let width = await question(read, 'Please Enter Width of chess board = ');
     let height = await question(read, 'Please Enter Height of chess board = ');
-    let numberOfKing = await question(read, 'Please Enter Numbers of king = ');
+    let numberOfKings = await question(read, 'Please Enter Numbers of king = ');
     let numberOfQueens = await question(read, 'Please Enter Numbers of Queens = ');
     let numberOfBishops = await question(read, 'Please Enter Numbers of Bishops = ');
-    let numberOfKnight = await question(read, 'Please Enter Numbers of Knight = ');
-    let numberOfRook = await question(read, 'Please Enter Numbers of Rook = ');
+    let numberOfKnights = await question(read, 'Please Enter Numbers of Knight = ');
+    let numberOfRooks = await question(read, 'Please Enter Numbers of Rook = ');
 
-    inputObj = {
+    let inputObj = {
         width,
         height,
-        numberOfKing,
-        numberOfRook,
-        numberOfKnight,
+        numberOfKings,
+        numberOfRooks,
+        numberOfKnights,
         numberOfQueens,
         numberOfBishops
     }
 
-    let numberofBoxes = 0;
+    let numberofBoxes = 1;
     let numberOfPieces = 0;
- 
+    let pieces = [];
+
     Object.keys(inputObj).map((key, index) => {
+        let keyValue = parseInt(inputObj[key]);
+
         if (index < 2) {
-            numberofBoxes *= inputObj[key];
+            numberofBoxes *= keyValue;
         } else {
-            numberOfPieces += inputObj[key];
+            const alias = getAlias(key);
+        
+            for(let i=0; i < keyValue; i++) {
+                pieces.push(alias);
+            }
+
+            numberOfPieces += keyValue;
         }
     });
- 
+    console.log('numberofBoxes ', numberofBoxes, 'numberOfPieces ', numberOfPieces);
     if (numberofBoxes < numberOfPieces) {
         console.log('/////////////////  ERROR  ////////////////////');
         console.log('Given Chess Board is too small ');
@@ -50,6 +70,55 @@ const input = async function(read) {
     }
 
     read.close();
-    return inputObj;
+    
+    let result = perms(pieces);
+    // remove duplicates
+    result = result.filter((val, pos) => {
+        return result.indexOf(val) !== pos;
+    }).map((val) => {
+        return val.split('');
+    });
+    
+    return {
+        inputObj,
+        permuteArr: result
+    }
 }
+
+/**
+ *
+ *
+ * @param {array} data
+ * @returns
+ */
+function perms(data) {
+    if (!(data instanceof Array)) {
+        throw new TypeError("input data must be an Array");
+    }
+
+    data = data.slice();  // make a copy
+    var permutations = [],
+        stack = [];
+
+    function doPerm() {
+        if (data.length == 0) {
+            permutations.push(stack.slice());
+        }
+        for (var i = 0; i < data.length; i++) {
+            var x = data.splice(i, 1);
+            stack.push(x);
+            doPerm();
+            stack.pop();
+            data.splice(i, 0, x);
+        }
+    }
+
+    doPerm();
+    for (var i = 0; i < permutations.length; i++) {
+        permutations[i] = permutations[i].join('');
+    }
+    
+    return permutations;
+}
+
 module.exports = input;
