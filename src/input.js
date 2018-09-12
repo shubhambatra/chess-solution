@@ -16,7 +16,7 @@ async function question(read, quest) {
                 resolve(answer)
             }
         });
-    })
+    });
 }
 /**
  * 
@@ -27,7 +27,7 @@ const input = async function(read) {
     console.log('dimensions of the board: Width X Height ')
     let width = await question(read, 'Please Enter Width of chess board = ');
     let height = await question(read, 'Please Enter Height of chess board = ');
-    let numberOfKings = await question(read, 'Please Enter Numbers of king = ');
+    let numberOfKings = await question(read, 'Please Enter Numbers of kings = ');
     let numberOfQueens = await question(read, 'Please Enter Numbers of Queens = ');
     let numberOfBishops = await question(read, 'Please Enter Numbers of Bishops = ');
     let numberOfKnights = await question(read, 'Please Enter Numbers of Knight = ');

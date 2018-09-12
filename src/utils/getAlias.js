@@ -6,7 +6,7 @@ const getAlias = function(key) {
     } else if (key === 'numberOfRooks') {
         return 'R';
     } else if (key === 'numberOfKnights') {
-        return 'T';
+        return 'N';
     } else if (key === 'numberOfBishops') {
         return 'B';
     }   
