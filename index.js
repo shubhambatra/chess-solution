@@ -30,7 +30,7 @@ const main = async function() {
     Promise.all([promise1, promise2]).then(values => {
         let results = values[0].concat(values[1]);
         console.timeEnd('calculating time');
-        console.log('all unique configuration is: ', results.length);
+        console.log('\x1b[0m \n\n all unique configuration is: ', results.length);
         console.time('printing time');
         ((results) => {
             read.question('Print the board on console (y/n) ',  (answer) => {
@@ -39,7 +39,6 @@ const main = async function() {
                         for(let i = 0; i<inputObj.width; i++) {
                             let str = '';
                             for(let j=0; j<inputObj.height; j++) {
-                                
                                 if (result[i][j].fill === true) {
                                     str += ' \x1b[32m'+result[i][j].alias+'  ';
                                 } else if (result[i][j].threat === true) {
