@@ -8,12 +8,12 @@ const knightThreat =require('./utils/knight');
 const bishopThreat = require('./utils/bishop');
 /**
  * 
- * @param {*} conf 
- * @param {*} piece 
- * @param {*} i 
- * @param {*} j 
- * @param {*} row 
- * @param {*} column 
+ * @param {Array} conf 
+ * @param {string} piece 
+ * @param {Number} i  current row of piece
+ * @param {Number} j  current column
+ * @param {Number} row  total number of row
+ * @param {Number} column  total number of column
  */
 const fillThreatMark = function(conf, piece, i, j, row, column) {
     if (piece === 'K') {
