@@ -23,6 +23,6 @@
 
 
 
- calculating time: 56607.328ms
-all unique configuration is:  162092
+- calculating time: 56607.328ms
+- all unique configuration is:  162092
 
