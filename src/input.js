@@ -42,7 +42,15 @@ const input = async function(read) {
         numberOfQueens,
         numberOfBishops
     }
-
+    // let inputObj = { 
+    //     width: '7',
+    //     height: '7',
+    //     numberOfKings: '2',
+    //     numberOfRooks: '0',
+    //     numberOfKnights: '1',
+    //     numberOfQueens: '2',
+    //     numberOfBishops: '2'
+    // }
     let numberofBoxes = 1;
     let numberOfPieces = 0;
     let pieces = [];
@@ -69,8 +77,7 @@ const input = async function(read) {
         console.log('//////////////////////////////////////////////');   
     }
 
-    read.close();
-    
+    console.time('calculating time');
     let result = perms(pieces);
     // remove duplicates
     result = result.filter((val, pos) => {
@@ -97,24 +104,23 @@ function perms(data) {
     }
 
     data = data.slice();  // make a copy
-    var permutations = [],
+    let permutations = [],
         stack = [];
 
     function doPerm() {
         if (data.length == 0) {
             permutations.push(stack.slice());
         }
-        for (var i = 0; i < data.length; i++) {
-            var x = data.splice(i, 1);
+        for (let i = 0; i < data.length; i++) {
+            let x = data.splice(i, 1);
             stack.push(x);
             doPerm();
             stack.pop();
             data.splice(i, 0, x);
         }
     }
-
     doPerm();
-    for (var i = 0; i < permutations.length; i++) {
+    for (let i = 0; i < permutations.length; i++) {
         permutations[i] = permutations[i].join('');
     }
     

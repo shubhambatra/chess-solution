@@ -31,7 +31,7 @@ const bishop = function(conf, i, j, row, column, isCheckThreat) {
         }
         return status;
     } else {
-        conf[i][j].fill = true;
+        checklimit(i,j, row, column) && conf[i][j] && (conf[i][j].fill = true);
         for (let rowset=i,columnset=j;  rowset<row && columnset<column; rowset++, columnset++) {
             if (checklimit(rowset, columnset, row, column)) {
                 conf[rowset][columnset].threat = true;
